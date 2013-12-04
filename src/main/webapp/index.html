@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Xebia Face Match</title>
+    <script src="jquery-2.0.3.min.js"></script>
+    <link rel="stylesheet" href="index.css"/>
+</head>
+<body>
+<h1>Xebia Face Match</h1>
+
+<div id="first"></div>
+<div id="second"></div>
+<div id="name"></div>
+<script>
+    $(document).ready(function () {
+        var score = 0;
+
+        function imageClicked(eventObject) {
+            if ($(eventObject.currentTarget).attr("id") === eventObject.data["answer"]) {
+                score++;
+            } else {
+                score--;
+            }
+            $("#first").off("click", imageClicked).css("cursor", "auto");
+            $("#second").off("click", imageClicked).css("cursor", "auto");
+            nextChallenge();
+        }
+
+        function nextChallenge() {
+            $.getJSON("/challenge", function (challenge) {
+                $("#first").html("<img src=\"" + challenge["first"] + "\"/>").click(challenge, imageClicked).css("cursor", "pointer");
+                $("#second").html("<img src=\"" + challenge["second"] + "\"/>").click(challenge, imageClicked).css("cursor", "pointer");
+                $("#name").html(challenge.name);
+            });
+        }
+
+        nextChallenge();
+    });
+</script>
+</body>
+</html>
