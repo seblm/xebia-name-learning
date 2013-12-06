@@ -26,7 +26,7 @@ public class ChallengeTest {
         when(random.nextInt(eq(2))).thenReturn(0, 1);
         when(random.nextBoolean()).thenReturn(true);
 
-        Challenge challenge = new Challenge(new LinkedHashSet<>(asList("/images/a guy.jpg", "/images/some other guy.jpg")), random);
+        Challenge challenge = new Challenge(new LinkedHashSet<>(asList("/images/a guy.jpg", "/images/some other guy.jpg")), new RandomQuestions(random));
 
         assertThat(challenge.getFirstImage()).as("firstImage").isEqualTo("/images/a%20guy.jpg");
         assertThat(challenge.getSecondImage()).as("secondImage").isEqualTo("/images/some%20other%20guy.jpg");
@@ -39,12 +39,11 @@ public class ChallengeTest {
         when(random.nextInt(eq(2))).thenReturn(0, 1);
         when(random.nextBoolean()).thenReturn(false);
 
-        Challenge challenge = new Challenge(new LinkedHashSet<>(asList("/images/a guy.jpg", "/images/some other guy.jpg")), random);
+        Challenge challenge = new Challenge(new LinkedHashSet<>(asList("/images/a guy.jpg", "/images/some other guy.jpg")), new RandomQuestions(random));
 
         assertThat(challenge.getFirstImage()).as("firstImage").isEqualTo("/images/a%20guy.jpg");
         assertThat(challenge.getSecondImage()).as("secondImage").isEqualTo("/images/some%20other%20guy.jpg");
         assertThat(challenge.getName()).as("name").isEqualTo("some other guy");
         assertThat(challenge.getAnswer()).as("answer").isEqualTo("secondImage");
     }
-
 }

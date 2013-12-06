@@ -16,7 +16,7 @@ public class ChallengeServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        challenge = new Challenge(getServletContext().getResourcePaths("/images"), new Random());
+        challenge = new Challenge(getServletContext().getResourcePaths("/images"), new RandomQuestions(new Random()));
     }
 
     @Override
