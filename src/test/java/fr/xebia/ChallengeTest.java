@@ -7,7 +7,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import javax.servlet.ServletException;
 import java.io.IOException;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Random;
 
 import static java.util.Arrays.asList;
@@ -26,12 +26,12 @@ public class ChallengeTest {
         when(random.nextInt(eq(2))).thenReturn(0, 1);
         when(random.nextBoolean()).thenReturn(true);
 
-        Challenge challenge = new Challenge(new HashSet<>(asList("/images/a guy.jpg", "/images/some other guy.jpg")), random);
+        Challenge challenge = new Challenge(new LinkedHashSet<>(asList("/images/a guy.jpg", "/images/some other guy.jpg")), random);
 
         assertThat(challenge.getFirstImage()).as("firstImage").isEqualTo("/images/a%20guy.jpg");
         assertThat(challenge.getSecondImage()).as("secondImage").isEqualTo("/images/some%20other%20guy.jpg");
         assertThat(challenge.getName()).as("name").isEqualTo("a guy");
-        assertThat(challenge.getAnswer()).as("answer").isEqualTo("first");
+        assertThat(challenge.getAnswer()).as("answer").isEqualTo("firstImage");
     }
 
     @Test
@@ -39,12 +39,12 @@ public class ChallengeTest {
         when(random.nextInt(eq(2))).thenReturn(0, 1);
         when(random.nextBoolean()).thenReturn(false);
 
-        Challenge challenge = new Challenge(new HashSet<>(asList("/images/a guy.jpg", "/images/some other guy.jpg")), random);
+        Challenge challenge = new Challenge(new LinkedHashSet<>(asList("/images/a guy.jpg", "/images/some other guy.jpg")), random);
 
-        assertThat(challenge.getSecondImage()).as("firstImage").isEqualTo("/images/some%20other%20guy.jpg");
-        assertThat(challenge.getFirstImage()).as("secondImage").isEqualTo("/images/a%20guy.jpg");
+        assertThat(challenge.getFirstImage()).as("firstImage").isEqualTo("/images/a%20guy.jpg");
+        assertThat(challenge.getSecondImage()).as("secondImage").isEqualTo("/images/some%20other%20guy.jpg");
         assertThat(challenge.getName()).as("name").isEqualTo("some other guy");
-        assertThat(challenge.getAnswer()).as("answer").isEqualTo("second");
+        assertThat(challenge.getAnswer()).as("answer").isEqualTo("secondImage");
     }
 
 }
