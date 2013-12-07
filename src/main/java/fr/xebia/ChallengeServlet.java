@@ -9,14 +9,21 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Random;
 
-@WebServlet("/challenge")
+@WebServlet(name = "challenge", value = "/challenge")
 public class ChallengeServlet extends HttpServlet {
-
     private Challenge challenge;
 
     @Override
     public void init() throws ServletException {
-        challenge = new Challenge(getServletContext().getResourcePaths("/images"), new RandomQuestions(new Random()));
+        challenge = new Challenge(getServletContext().getResourcePaths("/images"), getQuestions());
+    }
+
+    private Questions getQuestions() {
+        String questionsParameter = getServletConfig().getInitParameter("questions");
+        if (questionsParameter != null) {
+            return new PredictableQuestions(questionsParameter);
+        }
+        return new RandomQuestions(new Random());
     }
 
     @Override

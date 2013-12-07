@@ -3,7 +3,6 @@ package fr.xebia;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -26,6 +25,7 @@ public class Challenge {
                 .map((imagePath) -> IMAGE_NAME_EXTRACTOR.matcher(imagePath))
                 .filter((imagePathMatcher) -> imagePathMatcher.matches())
                 .map((imagePathMatcher) -> imagePathMatcher.group(1))
+                .sorted()
                 .collect(Collectors.<String>toList());
         this.questions = questions;
         this.next();
