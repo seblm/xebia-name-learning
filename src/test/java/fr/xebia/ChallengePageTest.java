@@ -22,9 +22,9 @@ public class ChallengePageTest extends PhantomJsTest {
     public void restartUI() throws Exception {
         goTo("/");
 
-        await().until("#name").withText().contains(Pattern.compile("[Christophe Heubès|Julien Buret]"));
+        await().until("#name").withText().contains(Pattern.compile("[Alexandre Dergham|Anne Beauchart]"));
 
-        if ("Julien Buret".equals($("#name").getText())) {
+        if ("Anne Beauchart".equals($("#name").getText())) {
             restartUI(); // servlet is statefull : we need to reset UI as it was when servlet was started for the first time
         }
     }
@@ -37,27 +37,27 @@ public class ChallengePageTest extends PhantomJsTest {
 
     @Test
     public void should_display_images_name_and_initial_score() throws Exception {
-        assertThat($("#firstImage").find("img").getAttribute("src")).endsWith("/images/Christophe%20Heub%C3%A8s.jpg");
-        assertThat($("#secondImage").find("img").getAttribute("src")).endsWith("/images/Florent%20Le%20Gall.jpg");
-        assertThat($("#name").getText()).isEqualTo("Christophe Heubès");
+        assertThat($("#firstImage").find("img").getAttribute("src")).endsWith("/images/Alexandre%20Dergham.jpg");
+        assertThat($("#secondImage").find("img").getAttribute("src")).endsWith("/images/Alexandre%20Dutra.jpg");
+        assertThat($("#name").getText()).isEqualTo("Alexandre Dergham");
         assertThat($("#score").getText()).isEqualTo("0");
     }
 
     @Test
     public void should_click_on_first_image_and_display_next_challenge() throws Exception {
         click("#firstImage");
-        await().until("#name").withText().equalTo("Julien Buret");
+        await().until("#name").withText().equalTo("Anne Beauchart");
 
         assertThat($("#score").getText()).isEqualTo("1");
-        assertThat($("#firstImage").find("img").getAttribute("src")).endsWith("/images/Gilles%20Mantel.jpg");
-        assertThat($("#secondImage").find("img").getAttribute("src")).endsWith("/images/Julien%20Buret.jpg");
-        assertThat($("#name").getText()).isEqualTo("Julien Buret");
+        assertThat($("#firstImage").find("img").getAttribute("src")).endsWith("/images/Alexis%20Kinsella.jpg");
+        assertThat($("#secondImage").find("img").getAttribute("src")).endsWith("/images/Anne%20Beauchart.jpg");
+        assertThat($("#name").getText()).isEqualTo("Anne Beauchart");
     }
 
     @Test
     public void should_click_on_good_image_and_win() throws Exception {
         click("#firstImage");
-        await().until("#name").withText().equalTo("Julien Buret");
+        await().until("#name").withText().equalTo("Anne Beauchart");
 
         assertThat($("#score").getText()).isEqualTo("1");
     }
@@ -65,7 +65,7 @@ public class ChallengePageTest extends PhantomJsTest {
     @Test
     public void should_click_on_bad_image_and_loose() throws Exception {
         click("#secondImage");
-        await().until("#name").withText().equalTo("Julien Buret");
+        await().until("#name").withText().equalTo("Anne Beauchart");
 
         assertThat($("#score").getText()).isEqualTo("-1");
     }
