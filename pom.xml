@@ -61,10 +61,17 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- fluentlenium -->
         <dependency>
             <groupId>org.fluentlenium</groupId>
             <artifactId>fluentlenium-core</artifactId>
             <version>0.9.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.detro.ghostdriver</groupId>
+            <artifactId>phantomjsdriver</artifactId>
+            <version>1.0.4</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

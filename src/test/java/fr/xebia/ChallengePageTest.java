@@ -1,28 +1,26 @@
 package fr.xebia;
 
-import org.fluentlenium.adapter.FluentTest;
+import fr.xebia.misc.PhantomJsTest;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.safari.SafariDriver;
 
 import java.util.regex.Pattern;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ChallengePageTest extends FluentTest {
+public class ChallengePageTest extends PhantomJsTest {
     @ClassRule
     public static TomcatRule tomcat = new TomcatRule("0 1 true 2 3 false");
 
     @Override
-    public WebDriver getDefaultDriver() {
-        return new SafariDriver();
+    protected String defaultUrl() {
+        return "http://localhost:8080";
     }
 
     @Before
     public void restartUI() throws Exception {
-        goTo("http://localhost:8080/");
+        goTo("/");
 
         await().until("#name").withText().contains(Pattern.compile("[Christophe Heubès|Julien Buret]"));
 
