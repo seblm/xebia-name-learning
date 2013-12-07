@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>fr.xebia</groupId>
-    <artifactId>xebia-face-match</artifactId>
+    <artifactId>xebia-name-learning</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
@@ -11,6 +11,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <failOnMissingWebXml>false</failOnMissingWebXml>
         <maven.tomcat.path>/</maven.tomcat.path>
         <maven.tomcat.uriEncoding>UTF-8</maven.tomcat.uriEncoding>
     </properties>
@@ -40,8 +41,6 @@
             <version>1.9.5</version>
             <scope>test</scope>
         </dependency>
-
-        <!-- tomcat7 -->
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-core</artifactId>
@@ -60,8 +59,6 @@
             <version>7.0.37</version>
             <scope>test</scope>
         </dependency>
-
-        <!-- fluentlenium -->
         <dependency>
             <groupId>org.fluentlenium</groupId>
             <artifactId>fluentlenium-core</artifactId>

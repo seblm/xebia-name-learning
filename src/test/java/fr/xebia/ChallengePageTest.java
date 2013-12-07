@@ -31,8 +31,8 @@ public class ChallengePageTest extends PhantomJsTest {
 
     @Test
     public void should_have_a_title() throws Exception {
-        assertThat(title()).isEqualTo("Xebia Face Match");
-        assertThat($("h1").getText()).isEqualTo("Xebia Face Match");
+        assertThat(title()).isEqualTo("Xebia Name Learning");
+        assertThat($("h1").getText()).isEqualTo("Xebia Name Learning");
     }
 
     @Test
