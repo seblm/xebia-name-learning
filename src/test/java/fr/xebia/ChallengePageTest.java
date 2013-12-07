@@ -36,19 +36,37 @@ public class ChallengePageTest extends PhantomJsTest {
     }
 
     @Test
-    public void should_display_images_and_name() throws Exception {
+    public void should_display_images_name_and_initial_score() throws Exception {
         assertThat($("#firstImage").find("img").getAttribute("src")).endsWith("/images/Christophe%20Heub%C3%A8s.jpg");
         assertThat($("#secondImage").find("img").getAttribute("src")).endsWith("/images/Florent%20Le%20Gall.jpg");
         assertThat($("#name").getText()).isEqualTo("Christophe Heubès");
+        assertThat($("#score").getText()).isEqualTo("0");
     }
 
     @Test
-    public void should_click_on_first_image() throws Exception {
+    public void should_click_on_first_image_and_display_next_challenge() throws Exception {
         click("#firstImage");
-
         await().until("#name").withText().equalTo("Julien Buret");
+
+        assertThat($("#score").getText()).isEqualTo("1");
         assertThat($("#firstImage").find("img").getAttribute("src")).endsWith("/images/Gilles%20Mantel.jpg");
         assertThat($("#secondImage").find("img").getAttribute("src")).endsWith("/images/Julien%20Buret.jpg");
         assertThat($("#name").getText()).isEqualTo("Julien Buret");
+    }
+
+    @Test
+    public void should_click_on_good_image_and_win() throws Exception {
+        click("#firstImage");
+        await().until("#name").withText().equalTo("Julien Buret");
+
+        assertThat($("#score").getText()).isEqualTo("1");
+    }
+
+    @Test
+    public void should_click_on_bad_image_and_loose() throws Exception {
+        click("#secondImage");
+        await().until("#name").withText().equalTo("Julien Buret");
+
+        assertThat($("#score").getText()).isEqualTo("-1");
     }
 }
