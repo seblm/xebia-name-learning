@@ -1,5 +1,7 @@
 package fr.xebia;
 
+import com.google.gson.Gson;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,10 +14,12 @@ import java.util.Random;
 @WebServlet(name = "challenge", value = "/challenge")
 public class ChallengeServlet extends HttpServlet {
     private Challenge challenge;
+    private Gson gson;
 
     @Override
     public void init() throws ServletException {
         challenge = new Challenge(getServletContext().getResourcePaths("/images"), getQuestions());
+        gson = new Gson();
     }
 
     private Questions getQuestions() {
@@ -31,12 +35,7 @@ public class ChallengeServlet extends HttpServlet {
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
         try (PrintWriter out = resp.getWriter()) {
-            out.println("{");
-            out.format("    \"firstImage\": \"%s\",%n", challenge.getFirstImage());
-            out.format("    \"secondImage\": \"%s\",%n", challenge.getSecondImage());
-            out.format("    \"name\": \"%s\",%n", challenge.getName());
-            out.format("    \"answer\": \"%s\"%n", challenge.getAnswer());
-            out.println("}");
+            out.print(gson.toJson(challenge));
         }
 
         challenge.next();
