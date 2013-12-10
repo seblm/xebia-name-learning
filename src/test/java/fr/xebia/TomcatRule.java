@@ -24,7 +24,7 @@ class TomcatRule extends ExternalResource {
         tomcat.setPort(8080);
 
         Context ctx = tomcat.addWebapp("/", new File("src/main/webapp").getAbsolutePath());
-        addInitParameter(ctx, "questions", questions);
+        addChallengeServletInitParameter(ctx, "questions", questions);
         VirtualDirContext resources = new VirtualDirContext();
         resources.setExtraResourcePaths("/WEB-INF/classes=target/classes");
         ctx.setResources(resources);
@@ -32,7 +32,7 @@ class TomcatRule extends ExternalResource {
         tomcat.start();
     }
 
-    private void addInitParameter(Context ctx, String name, String value) {
+    private void addChallengeServletInitParameter(Context ctx, String name, String value) {
         ctx.addContainerListener(event -> {
             if ("addChild".equals(event.getType()) && event.getData() instanceof Wrapper) {
                 Wrapper wrapper = (Wrapper) event.getData();
