@@ -1,7 +1,5 @@
 package fr.xebia;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -33,12 +31,8 @@ public class Challenge {
 
     public void next() throws RuntimeException {
         Question question = questions.next(images.size());
-        try {
-            firstImage = format("/images/%s.jpg", URLEncoder.encode(images.get(question.getFirst()), "UTF-8").replaceAll("\\+", "%20"));
-            secondImage = format("/images/%s.jpg", URLEncoder.encode(images.get(question.getSecond()), "UTF-8").replaceAll("\\+", "%20"));
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
+        firstImage = format("/images/%s.jpg", images.get(question.getFirst()));
+        secondImage = format("/images/%s.jpg", images.get(question.getSecond()));
         name = images.get(question.isFirstIsAnswer() ? question.getFirst() : question.getSecond());
         answer = question.isFirstIsAnswer() ? "firstImage" : "secondImage";
     }

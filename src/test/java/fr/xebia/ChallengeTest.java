@@ -28,8 +28,8 @@ public class ChallengeTest {
 
         Challenge challenge = new Challenge(new HashSet<>(asList("/images/a guy.jpg", "/images/some other guy.jpg")), new RandomQuestions(random));
 
-        assertThat(challenge.getFirstImage()).as("firstImage").isEqualTo("/images/a%20guy.jpg");
-        assertThat(challenge.getSecondImage()).as("secondImage").isEqualTo("/images/some%20other%20guy.jpg");
+        assertThat(challenge.getFirstImage()).as("firstImage").isEqualTo("/images/a guy.jpg");
+        assertThat(challenge.getSecondImage()).as("secondImage").isEqualTo("/images/some other guy.jpg");
         assertThat(challenge.getName()).as("name").isEqualTo("a guy");
         assertThat(challenge.getAnswer()).as("answer").isEqualTo("firstImage");
     }
@@ -41,8 +41,8 @@ public class ChallengeTest {
 
         Challenge challenge = new Challenge(new HashSet<>(asList("/images/a guy.jpg", "/images/some other guy.jpg")), new RandomQuestions(random));
 
-        assertThat(challenge.getFirstImage()).as("firstImage").isEqualTo("/images/a%20guy.jpg");
-        assertThat(challenge.getSecondImage()).as("secondImage").isEqualTo("/images/some%20other%20guy.jpg");
+        assertThat(challenge.getFirstImage()).as("firstImage").isEqualTo("/images/a guy.jpg");
+        assertThat(challenge.getSecondImage()).as("secondImage").isEqualTo("/images/some other guy.jpg");
         assertThat(challenge.getName()).as("name").isEqualTo("some other guy");
         assertThat(challenge.getAnswer()).as("answer").isEqualTo("secondImage");
     }
