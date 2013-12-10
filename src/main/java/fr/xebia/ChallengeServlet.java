@@ -35,7 +35,7 @@ public class ChallengeServlet extends HttpServlet {
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
         try (PrintWriter out = resp.getWriter()) {
-            out.print(gson.toJson(challenge));
+            gson.toJson(challenge, out);
         }
 
         challenge.next();
