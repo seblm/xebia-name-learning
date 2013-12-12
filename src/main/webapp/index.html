@@ -7,34 +7,84 @@
     <meta charset="UTF-8"/>
 </head>
 <body>
-<h1>Xebia Name Learning</h1>
+<div id="banner">
+    Name Learning
+</div>
 
-<div id="score"></div>
-<div id="name"></div>
-<div id="firstImage"></div>
-<div id="secondImage"></div>
+<div id="game">
+    <div class="guess hideQuestion"></div>
+    <div class="score">Ton score : <span></span></div>
+    <div class="pictures">
+        <span class="firstImage"></span>
+        <span class="secondImage"></span>
+    </div>
+</div>
+
+<div id="credentials">
+    Special thanks to <a href="https://twitter.com/dgageot">@dgageot</a> for graphics
+</div>
+
 <script>
     $(document).ready(function () {
-        var score = 0;
-
-        function imageClicked(eventObject) {
-            if ($(eventObject.currentTarget).attr("id") === eventObject.data["answer"]) {
-                score++;
-            } else {
-                score--;
-            }
-            $("#firstImage").off("click", imageClicked).css("cursor", "auto");
-            $("#secondImage").off("click", imageClicked).css("cursor", "auto");
-            nextChallenge();
-        }
+        var score = 0, interval;
 
         function nextChallenge() {
-            $("#score").text(score);
+            clearInterval(interval);
+
+            $(".score").find("span").text(score);
             $.getJSON("/challenge", function (challenge) {
-                $("#firstImage").html("<img src=\"" + challenge["firstImage"] + "\"/>").click(challenge, imageClicked).css("cursor", "pointer");
-                $("#secondImage").html("<img src=\"" + challenge["secondImage"] + "\"/>").click(challenge, imageClicked).css("cursor", "pointer");
-                $("#name").html(challenge.name);
+                $(".firstImage").html("<img src=\"" + challenge["firstImage"] + "\" class=\"hideLeft\"/>").click(challenge, imageClicked).css("cursor", "pointer");
+                $(".secondImage").html("<img src=\"" + challenge["secondImage"] + "\" class=\"hideRight\"/>").click(challenge, imageClicked).css("cursor", "pointer");
+                $(".guess").html("Où est " + challenge.name + " ?").addClass("hideQuestion");
+
+                interval = setInterval(showQuestionsAndImages, 500);
             });
+        }
+
+        function showQuestionsAndImages() {
+            clearInterval(interval);
+
+            $(".guess").removeClass("hideQuestion");
+            $(".score").find("span").removeAttr("class");
+            $(".firstImage").find("img").attr("class", "resetLeft");
+            $(".secondImage").find("img").attr("class", "resetRight");
+        }
+
+        function imageClicked(eventObject) {
+            if ($(eventObject.currentTarget).attr("class") === eventObject.data["answer"]) {
+                score++;
+                $(".score").find("span").text(score).addClass("bump").addClass("win");
+            } else {
+                score--;
+                $(".score").find("span").text(score).addClass("bump").addClass("loose");
+            }
+            var wrongImageAnimation = eventObject.data["answer"] === "firstImage" ? "Right" : "Left";
+            var wrongImageClass = eventObject.data["answer"] === "firstImage" ? ".secondImage" : ".firstImage";
+            $(wrongImageClass).find("img").attr("class", "hide" + wrongImageAnimation);
+            var correctImageAnimation = eventObject.data["answer"] === "firstImage" ? "Left" : "Right";
+            var correctImageClass = eventObject.data["answer"] === "firstImage" ? ".firstImage" : ".secondImage";
+            $(correctImageClass).find("img").attr("class", "center" + correctImageAnimation);
+            $(".firstImage").off("click", imageClicked).css("cursor", "auto");
+            $(".secondImage").off("click", imageClicked).css("cursor", "auto");
+
+            interval = setInterval(function () { pause(eventObject); }, 500);
+        }
+
+        function pause(eventObject) {
+            clearInterval(interval);
+
+            interval = setInterval(function () { prepareNextChallenge(eventObject); }, 1000);
+        }
+
+        function prepareNextChallenge(eventObject) {
+            clearInterval(interval);
+
+            $(".guess").addClass("hideQuestion");
+            var correctImageAnimation = eventObject.data["answer"] === "firstImage" ? "Left" : "Right";
+            var correctImageClass = eventObject.data["answer"] === "firstImage" ? ".firstImage" : ".secondImage";
+            $(correctImageClass).find("img").attr("class", "hide" + correctImageAnimation);
+
+            interval = setInterval(nextChallenge, 500);
         }
 
         nextChallenge();

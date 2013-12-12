@@ -22,9 +22,9 @@ public class ChallengePageTest extends PhantomJsTest {
     public void restartUI() throws Exception {
         goTo("/");
 
-        await().until("#name").withText().contains(Pattern.compile("[Alexandre Dergham|Anne Beauchart]"));
+        await().until(".guess").withText().contains(Pattern.compile("Où est [Alexandre Dergham|Anne Beauchart] ?")).isPresent();
 
-        if ("Anne Beauchart".equals($("#name").getText())) {
+        if ("Où est Anne Beauchart ?".equals($(".guess").getText())) {
             restartUI(); // servlet is statefull : we need to reset UI as it was when servlet was started for the first time
         }
     }
@@ -32,41 +32,38 @@ public class ChallengePageTest extends PhantomJsTest {
     @Test
     public void should_have_a_title() throws Exception {
         assertThat(title()).isEqualTo("Xebia Name Learning");
-        assertThat($("h1").getText()).isEqualTo("Xebia Name Learning");
     }
 
     @Test
     public void should_display_images_name_and_initial_score() throws Exception {
-        assertThat($("#firstImage").find("img").getAttribute("src")).endsWith("/images/Alexandre%20Dergham.jpg");
-        assertThat($("#secondImage").find("img").getAttribute("src")).endsWith("/images/Alexandre%20Dutra.jpg");
-        assertThat($("#name").getText()).isEqualTo("Alexandre Dergham");
-        assertThat($("#score").getText()).isEqualTo("0");
+        assertThat($(".firstImage").find("img").getAttribute("src")).endsWith("/images/Alexandre%20Dergham.jpg");
+        assertThat($(".secondImage").find("img").getAttribute("src")).endsWith("/images/Alexandre%20Dutra.jpg");
+        assertThat($(".guess").getText()).isEqualTo("Où est Alexandre Dergham ?");
+        assertThat($(".score").find("span").getText()).isEqualTo("0");
     }
 
     @Test
     public void should_click_on_first_image_and_display_next_challenge() throws Exception {
-        click("#firstImage");
-        await().until("#name").withText().equalTo("Anne Beauchart");
+        click(".firstImage");
 
-        assertThat($("#score").getText()).isEqualTo("1");
-        assertThat($("#firstImage").find("img").getAttribute("src")).endsWith("/images/Alexis%20Kinsella.jpg");
-        assertThat($("#secondImage").find("img").getAttribute("src")).endsWith("/images/Anne%20Beauchart.jpg");
-        assertThat($("#name").getText()).isEqualTo("Anne Beauchart");
+        assertThat($(".score").find("span").getText()).isEqualTo("1");
+        Thread.sleep(2000); // TODO ugly
+        assertThat($(".firstImage").find("img").getAttribute("src")).endsWith("/images/Alexis%20Kinsella.jpg");
+        assertThat($(".secondImage").find("img").getAttribute("src")).endsWith("/images/Anne%20Beauchart.jpg");
+        assertThat($(".guess").getText()).isEqualTo("Où est Anne Beauchart ?");
     }
 
     @Test
     public void should_click_on_good_image_and_win() throws Exception {
-        click("#firstImage");
-        await().until("#name").withText().equalTo("Anne Beauchart");
+        click(".firstImage");
 
-        assertThat($("#score").getText()).isEqualTo("1");
+        assertThat($(".score").find("span").getText()).isEqualTo("1");
     }
 
     @Test
     public void should_click_on_bad_image_and_loose() throws Exception {
-        click("#secondImage");
-        await().until("#name").withText().equalTo("Anne Beauchart");
+        click(".secondImage");
 
-        assertThat($("#score").getText()).isEqualTo("-1");
+        assertThat($(".score").find("span").getText()).isEqualTo("-1");
     }
 }

@@ -6,7 +6,7 @@ With this app, you can play and learn. [Try it now](http://xebia-name-learning.s
 
 ### TODO
 
- 1. decent css (with cute animations)
+ 1. add newer photos
  2. storing events and scores to create leaderboard
  3. badges
  4. google auth2 authentication
