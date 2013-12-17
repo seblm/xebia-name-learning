@@ -10,8 +10,8 @@ import static java.lang.String.format;
 public class Challenge {
     private static final Pattern IMAGE_NAME_EXTRACTOR = Pattern.compile("/images/(.+).jpg");
 
-    private final List<String> images;
-    private final Questions questions;
+    private final transient List<String> images;
+    private final transient Questions questions;
 
     private String firstImage;
     private String secondImage;
