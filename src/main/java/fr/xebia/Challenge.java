@@ -31,10 +31,10 @@ public class Challenge {
 
     public void next() throws RuntimeException {
         Question question = questions.next(images.size());
-        firstImage = format("/images/%s.jpg", images.get(question.getFirst()));
-        secondImage = format("/images/%s.jpg", images.get(question.getSecond()));
-        name = images.get(question.isFirstIsAnswer() ? question.getFirst() : question.getSecond());
-        answer = question.isFirstIsAnswer() ? "firstImage" : "secondImage";
+        firstImage = format("/images/%s.jpg", images.get(question.first));
+        secondImage = format("/images/%s.jpg", images.get(question.second));
+        name = images.get(question.firstIsAnswer ? question.first : question.second);
+        answer = question.firstIsAnswer ? "firstImage" : "secondImage";
     }
 
     public String getFirstImage() {
