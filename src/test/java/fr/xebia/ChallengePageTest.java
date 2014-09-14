@@ -19,7 +19,7 @@ public class ChallengePageTest extends PhantomJsTest {
     }
 
     @Before
-    public void restartUI() throws Exception {
+    public void restartUI() {
         goTo("/");
 
         await().until(".guess").withText().contains(Pattern.compile("Où est [Alexandre Dergham|Anne Beauchart] ?")).isPresent();
@@ -35,7 +35,7 @@ public class ChallengePageTest extends PhantomJsTest {
     }
 
     @Test
-    public void should_display_images_name_and_initial_score() throws Exception {
+    public void should_display_images_name_and_initial_score() {
         assertThat($(".firstImage").find("img").getAttribute("src")).endsWith("/images/Alexandre%20Dergham.jpg");
         assertThat($(".secondImage").find("img").getAttribute("src")).endsWith("/images/Alexandre%20Dutra.jpg");
         assertThat($(".guess").getText()).isEqualTo("Où est Alexandre Dergham ?");
@@ -43,7 +43,7 @@ public class ChallengePageTest extends PhantomJsTest {
     }
 
     @Test
-    public void should_click_on_first_image_and_display_next_challenge() throws Exception {
+    public void should_click_on_first_image_and_display_next_challenge() throws InterruptedException {
         click(".firstImage");
 
         assertThat($(".score").find("span").getText()).isEqualTo("1");
@@ -54,14 +54,14 @@ public class ChallengePageTest extends PhantomJsTest {
     }
 
     @Test
-    public void should_click_on_good_image_and_win() throws Exception {
+    public void should_click_on_good_image_and_win() {
         click(".firstImage");
 
         assertThat($(".score").find("span").getText()).isEqualTo("1");
     }
 
     @Test
-    public void should_click_on_bad_image_and_loose() throws Exception {
+    public void should_click_on_bad_image_and_loose() {
         click(".secondImage");
 
         assertThat($(".score").find("span").getText()).isEqualTo("-1");

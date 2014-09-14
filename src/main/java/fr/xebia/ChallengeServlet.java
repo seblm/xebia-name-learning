@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Optional;
 import java.util.Random;
 
 @WebServlet(name = "challenge", value = "/challenge")
@@ -23,11 +24,9 @@ public class ChallengeServlet extends HttpServlet {
     }
 
     private Questions getQuestions() {
-        String questionsParameter = getServletConfig().getInitParameter("questions");
-        if (questionsParameter != null) {
-            return new PredictableQuestions(questionsParameter);
-        }
-        return new RandomQuestions(new Random());
+        return Optional.ofNullable(getServletConfig().getInitParameter("questions"))
+                .map(questionsParameter -> (Questions) new PredictableQuestions(questionsParameter))
+                .orElse(new RandomQuestions(new Random()));
     }
 
     @Override
