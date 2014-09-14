@@ -4,10 +4,12 @@ import org.apache.catalina.Context;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.Wrapper;
 import org.apache.catalina.startup.Tomcat;
-import org.apache.naming.resources.VirtualDirContext;
+import org.apache.catalina.webresources.StandardRoot;
 import org.junit.rules.ExternalResource;
 
 import java.io.File;
+
+import static org.apache.catalina.WebResourceRoot.ResourceSetType.POST;
 
 class TomcatRule extends ExternalResource {
     private final String questions;
@@ -25,8 +27,8 @@ class TomcatRule extends ExternalResource {
 
         Context ctx = tomcat.addWebapp("/", new File("src/main/webapp").getAbsolutePath());
         addChallengeServletInitParameter(ctx, "questions", questions);
-        VirtualDirContext resources = new VirtualDirContext();
-        resources.setExtraResourcePaths("/WEB-INF/classes=target/classes");
+        StandardRoot resources = new StandardRoot(ctx);
+        resources.createWebResourceSet(POST, "/WEB-INF/classes", new File("target/classes").toURI().toURL(), "/");
         ctx.setResources(resources);
 
         tomcat.start();

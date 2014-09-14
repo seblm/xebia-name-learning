@@ -10,7 +10,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.service.DriverService;
 
 import java.io.File;
 
@@ -72,9 +71,7 @@ public abstract class PhantomJsTest extends FluentAdapter {
             DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.setCapability(PHANTOMJS_EXECUTABLE_PATH_PROPERTY, phantomJsExe.getAbsolutePath());
 
-            DriverService service = PhantomJSDriverService.createDefaultService(capabilities);
-
-            return new PhantomJSDriver(service, capabilities);
+            return new PhantomJSDriver(PhantomJSDriverService.createDefaultService(capabilities), capabilities);
         }
     }
 }
