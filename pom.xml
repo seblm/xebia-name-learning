@@ -14,7 +14,7 @@
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <maven.tomcat.path>/</maven.tomcat.path>
         <maven.tomcat.uriEncoding>UTF-8</maven.tomcat.uriEncoding>
-        <tomcat.version>8.0.11</tomcat.version>
+        <tomcat.version>8.0.12</tomcat.version>
     </properties>
 
     <dependencies>
