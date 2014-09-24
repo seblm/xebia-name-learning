@@ -66,15 +66,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.fluentlenium</groupId>
-            <artifactId>fluentlenium-core</artifactId>
-            <version>0.10.2</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.github.detro</groupId>
-            <artifactId>phantomjsdriver</artifactId>
-            <version>1.2.0</version>
+            <groupId>net.code-story</groupId>
+            <artifactId>simplelenium</artifactId>
+            <version>1.10</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
