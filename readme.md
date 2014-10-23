@@ -1,17 +1,17 @@
-How to remember first name and last name of every xebian ?
+How to remember first name and last name of every member of a team ?
 
-With this app, you can play and learn. [Try it now](http://xebia-name-learning.seblm.eu.cloudbees.net)!
+With this app, you can play and learn. [Try it now](http://ec2-54-171-78-127.eu-west-1.compute.amazonaws.com)!
 
 ## Contribute
 
 ### TODO
 
- 1. add newer photos
- 2. storing events and scores to create leaderboard
- 3. badges
- 4. google auth2 authentication
- 5. request xebian authorization to be included into this game
- 5. more games :
+ 1. google oauth authentication
+ 2. synchronize names/photos/other infos with external service
+ 3. storing events and scores to create leaderboard
+ 4. badges
+ 5. request users authorization to be included into this game
+ 6. more games :
    1. by fundation
    2. by client/location
    3. ...
