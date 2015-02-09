@@ -8,8 +8,17 @@ import org.apache.catalina.webresources.StandardRoot;
 import org.junit.rules.ExternalResource;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileVisitResult;
+import java.nio.file.FileVisitor;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
+import static java.nio.file.FileVisitResult.CONTINUE;
 import static org.apache.catalina.WebResourceRoot.ResourceSetType.POST;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class TomcatRule extends ExternalResource {
     private final String questions;
@@ -51,6 +60,29 @@ class TomcatRule extends ExternalResource {
             tomcat.stop();
         } catch (LifecycleException e) {
             e.printStackTrace();
+        } finally {
+            File directoryToDelete = new File("tomcat.8080");
+            try {
+                Files.walkFileTree(directoryToDelete.toPath(), new SimpleFileVisitor<Path>() {
+                    @Override
+                    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                        return deleteAndContinue(file);
+                    }
+
+                    @Override
+                    public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+                        return deleteAndContinue(dir);
+                    }
+
+                    private FileVisitResult deleteAndContinue(Path file) throws IOException {
+                        Files.delete(file);
+                        return CONTINUE;
+                    }
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            assertThat(directoryToDelete.delete()).isTrue();
         }
     }
 }
