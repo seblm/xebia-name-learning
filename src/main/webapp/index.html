@@ -26,6 +26,7 @@
 
 <script>
     $(document).ready(function () {
+        const DELAY = 500;
         var score = 0, interval;
 
         function nextChallenge() {
@@ -37,7 +38,7 @@
                 $(".secondImage").html("<img src=\"" + challenge["secondImage"] + "\" class=\"hideRight\"/>").click(challenge, imageClicked).css("cursor", "pointer");
                 $(".guess").html("Où est " + challenge.name + " ?").addClass("hideQuestion");
 
-                interval = setInterval(showQuestionsAndImages, 500);
+                interval = setInterval(showQuestionsAndImages, DELAY);
             });
         }
 
@@ -67,7 +68,7 @@
             $(".firstImage").off("click", imageClicked).css("cursor", "auto");
             $(".secondImage").off("click", imageClicked).css("cursor", "auto");
 
-            interval = setInterval(function () { pause(eventObject); }, 500);
+            interval = setInterval(function () { pause(eventObject); }, DELAY);
         }
 
         function pause(eventObject) {
@@ -84,7 +85,7 @@
             var correctImageClass = eventObject.data["answer"] === "firstImage" ? ".firstImage" : ".secondImage";
             $(correctImageClass).find("img").attr("class", "hide" + correctImageAnimation);
 
-            interval = setInterval(nextChallenge, 500);
+            interval = setInterval(nextChallenge, DELAY);
         }
 
         nextChallenge();
